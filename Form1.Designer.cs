@@ -29,7 +29,9 @@ namespace laba5
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pbMain = new System.Windows.Forms.PictureBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).BeginInit();
             this.SuspendLayout();
             // 
@@ -41,6 +43,11 @@ namespace laba5
             this.pbMain.TabIndex = 0;
             this.pbMain.TabStop = false;
             this.pbMain.Paint += new System.Windows.Forms.PaintEventHandler(this.pbMain_Paint);
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 30;
             // 
             // Form1
             // 
@@ -59,6 +66,7 @@ namespace laba5
         #endregion
 
         private System.Windows.Forms.PictureBox pbMain;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
