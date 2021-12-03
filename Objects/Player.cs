@@ -13,6 +13,7 @@ namespace laba5.Objects
         {
             g.FillEllipse(new SolidBrush(Color.Aquamarine),-15,-15,30,30);
             g.DrawEllipse(new Pen(Color.Black, 2), -15, -15, 30, 30);
+            g.DrawLine(new Pen(Color.Black, 2), 0, 0, 25, 0);
         }
 
     }

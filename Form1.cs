@@ -15,11 +15,14 @@ namespace laba5
     {
         List<BaseObject> objects = new List<BaseObject>();
         Player player;
+        Marker marker;
         public Form1()
         {
             InitializeComponent();
+            marker = new Marker(pbMain.Width / 2 + 50, pbMain.Height / 2 + 50, 0);
             player = new Player(pbMain.Width / 2, pbMain.Height / 2, 0);
             objects.Add(player);
+            objects.Add(marker);
             objects.Add(new MyRectangle(100, 100, 45));
             objects.Add(new MyRectangle(50, 50, 0));
         }
