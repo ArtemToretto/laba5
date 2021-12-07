@@ -16,15 +16,28 @@ namespace laba5
         List<BaseObject> objects = new List<BaseObject>();
         Player player;
         Marker marker;
+        GreenRing firstRing;
+        GreenRing secondRing;
         public Form1()
         {
             InitializeComponent();
             marker = new Marker(pbMain.Width / 2 + 50, pbMain.Height / 2 + 50, 0);
             player = new Player(pbMain.Width / 2, pbMain.Height / 2, 0);
-            objects.Add(marker);
             objects.Add(player);
-            objects.Add(new MyRectangle(100, 100, 45));
-            objects.Add(new MyRectangle(50, 50, 0));
+            player.OnOverlap += (p, obj) =>
+              {
+                  txtLog.Text = $"[{DateTime.Now:G}] Игрок пересекся с {obj}\n" + txtLog.Text;
+              };
+            player.OnMarkerOverlap += (m) =>
+              {
+                  objects.Remove(m);
+                  marker = null;
+              };
+            objects.Add(marker);
+            firstRing=new GreenRing(100, 100, 0);
+            secondRing=new GreenRing(300, 170, 0);
+            objects.Add(firstRing);
+            objects.Add(secondRing);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -36,12 +49,30 @@ namespace laba5
         {
             var g = e.Graphics;
             g.Clear(Color.White);
-            foreach (var obj in objects)
+
+            UpdatePlayer();
+
+            foreach (var obj in objects.ToList())
             {
                 if (obj!=player && player.Overlaps(obj,g))
                 {
-                    txtLog.Text = $"[{DateTime.Now:G}] Игрок пересекся с {obj}\n" + txtLog.Text;
+                    player.Overlap(obj);
+                    obj.Overlap(player);
                 }
+            }
+
+            foreach (var obj in objects.ToList())
+            {
+                if ((obj==firstRing || obj==secondRing) && player.Overlaps(obj,g))
+                {
+                    RandomGreenRing(obj as GreenRing);
+                    player.Overlap(obj);
+                    obj.Overlap(player);
+                }
+            }
+
+            foreach (var obj in objects)
+            {
                 g.Transform = obj.GetTransform();
                 obj.Render(g);
             }
@@ -49,21 +80,46 @@ namespace laba5
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            float dx = marker.X - player.X;
-            float dy = marker.Y - player.Y;
-
-            float length = MathF.Sqrt(dx * dx + dy * dy);
-            dx = dx / length;
-            dy = dy / length;
-            player.X += dx * 2;
-            player.Y += dy * 2;
             pbMain.Invalidate();
         }
 
         private void pbMain_MouseClick(object sender, MouseEventArgs e)
         {
+           if (marker==null)
+            {
+                marker = new Marker(0, 0, 0);
+                objects.Add(marker);
+            }
+            
             marker.X = e.X;
             marker.Y = e.Y;
+        }
+
+        private void UpdatePlayer()
+        {
+            if (marker != null)
+            {
+                float dx = marker.X - player.X;
+                float dy = marker.Y - player.Y;
+                float length = MathF.Sqrt(dx * dx + dy * dy);
+                dx = dx / length;
+                dy = dy / length;
+                player.vX += dx * 0.5f;
+                player.vY += dy * 0.5f;
+                player.Angle = 90 - MathF.Atan2(player.vX, player.vY) * 180 / MathF.PI;
+            }
+            player.vX += -player.vX * 0.1f;
+            player.vY += -player.vY * 0.1f;
+            player.X += player.vX;
+            player.Y += player.vY;
+        }
+
+        private void RandomGreenRing(GreenRing obj)
+        {
+            Random randomX = new Random();
+            obj.X = randomX.Next(15, pbMain.Width-15);
+            Random randomY = new Random();
+            obj.Y = randomY.Next(15, pbMain.Height - 15);
         }
     }
 }
