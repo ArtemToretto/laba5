@@ -18,10 +18,13 @@ namespace laba5
         Marker marker;
         GreenRing firstRing;
         GreenRing secondRing;
+        BlackZone zone=new BlackZone(-100,0,0);
+        int score = 0;
         public Form1()
         {
             InitializeComponent();
-            marker = new Marker(pbMain.Width / 2 + 50, pbMain.Height / 2 + 50, 0);
+            Score.Text = "Счет: 0";
+            marker = new Marker(pbMain.Width / 2+5, pbMain.Height / 2+5, 0);
             player = new Player(pbMain.Width / 2, pbMain.Height / 2, 0);
             objects.Add(player);
             player.OnOverlap += (p, obj) =>
@@ -50,7 +53,15 @@ namespace laba5
             var g = e.Graphics;
             g.Clear(Color.White);
 
+            g.Transform = zone.GetTransform();
+            zone.Render(g);
+
             UpdatePlayer();
+
+            foreach (var obj in objects.ToList())
+            {
+                if 
+            }
 
             foreach (var obj in objects.ToList())
             {
@@ -65,9 +76,11 @@ namespace laba5
             {
                 if ((obj==firstRing || obj==secondRing) && player.Overlaps(obj,g))
                 {
+                    score++;
                     RandomGreenRing(obj as GreenRing);
                     player.Overlap(obj);
                     obj.Overlap(player);
+                    Score.Text = $"Счет: {score}";
                 }
             }
 
@@ -76,10 +89,12 @@ namespace laba5
                 g.Transform = obj.GetTransform();
                 obj.Render(g);
             }
+            
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            ZoneGo();
             pbMain.Invalidate();
         }
 
@@ -120,6 +135,22 @@ namespace laba5
             obj.X = randomX.Next(15, pbMain.Width-15);
             Random randomY = new Random();
             obj.Y = randomY.Next(15, pbMain.Height - 15);
+        }
+
+        private void ZoneGo()
+        {
+            if (zone.X<1400)
+            {
+                zone.X += 2;
+            }
+            else 
+            {
+                zone.X = -100;
+            }
+        }
+        private void Score_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
