@@ -32,6 +32,7 @@ namespace laba5
             this.components = new System.ComponentModel.Container();
             this.pbMain = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.txtLog = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).BeginInit();
             this.SuspendLayout();
             // 
@@ -39,7 +40,7 @@ namespace laba5
             // 
             this.pbMain.Location = new System.Drawing.Point(6, 6);
             this.pbMain.Name = "pbMain";
-            this.pbMain.Size = new System.Drawing.Size(599, 468);
+            this.pbMain.Size = new System.Drawing.Size(599, 215);
             this.pbMain.TabIndex = 0;
             this.pbMain.TabStop = false;
             this.pbMain.Paint += new System.Windows.Forms.PaintEventHandler(this.pbMain_Paint);
@@ -51,11 +52,20 @@ namespace laba5
             this.timer1.Interval = 30;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // txtLog
+            // 
+            this.txtLog.Location = new System.Drawing.Point(611, 6);
+            this.txtLog.Name = "txtLog";
+            this.txtLog.Size = new System.Drawing.Size(165, 215);
+            this.txtLog.TabIndex = 1;
+            this.txtLog.Text = "";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(611, 480);
+            this.ClientSize = new System.Drawing.Size(783, 227);
+            this.Controls.Add(this.txtLog);
             this.Controls.Add(this.pbMain);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -69,6 +79,7 @@ namespace laba5
 
         private System.Windows.Forms.PictureBox pbMain;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.RichTextBox txtLog;
     }
 }
 
