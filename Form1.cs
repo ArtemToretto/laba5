@@ -38,6 +38,10 @@ namespace laba5
             g.Clear(Color.White);
             foreach (var obj in objects)
             {
+                if (obj!=player && player.Overlaps(obj,g))
+                {
+                    txtLog.Text = $"[{DateTime.Now:G}] Игрок пересекся с {obj}\n" + txtLog.Text;
+                }
                 g.Transform = obj.GetTransform();
                 obj.Render(g);
             }
