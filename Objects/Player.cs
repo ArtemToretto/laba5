@@ -20,6 +20,11 @@ namespace laba5.Objects
             g.DrawLine(new Pen(Color.Black, 2), 0, 0, 25, 0);
         }
 
+        public override void BlackRender(Graphics g)
+        {
+            g.FillEllipse(new SolidBrush(Color.White), -15, -15, 30, 30);
+            g.DrawLine(new Pen(Color.Black, 2), 0, 0, 25, 0);
+        }
         public override GraphicsPath GetGraphicsPath()
         {
             var path = base.GetGraphicsPath();
