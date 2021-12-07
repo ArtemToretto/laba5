@@ -33,6 +33,7 @@ namespace laba5
             this.pbMain = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.txtLog = new System.Windows.Forms.RichTextBox();
+            this.Score = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).BeginInit();
             this.SuspendLayout();
             // 
@@ -60,11 +61,24 @@ namespace laba5
             this.txtLog.TabIndex = 1;
             this.txtLog.Text = "";
             // 
+            // Score
+            // 
+            this.Score.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.Score.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Score.Location = new System.Drawing.Point(527, 12);
+            this.Score.Name = "Score";
+            this.Score.ReadOnly = true;
+            this.Score.Size = new System.Drawing.Size(69, 16);
+            this.Score.TabIndex = 2;
+            this.Score.Text = "Счет: ";
+            this.Score.TextChanged += new System.EventHandler(this.Score_TextChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(783, 227);
+            this.Controls.Add(this.Score);
             this.Controls.Add(this.txtLog);
             this.Controls.Add(this.pbMain);
             this.Name = "Form1";
@@ -72,6 +86,7 @@ namespace laba5
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -80,6 +95,7 @@ namespace laba5
         private System.Windows.Forms.PictureBox pbMain;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.RichTextBox txtLog;
+        private System.Windows.Forms.TextBox Score;
     }
 }
 
