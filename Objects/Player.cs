@@ -12,7 +12,7 @@ namespace laba5.Objects
         public Player(float x, float y, float angle) : base(x, y, angle){ }
 
         public Action<Marker> OnMarkerOverlap;
-
+        public Action<GreenRing> OnRingOverlap;
         public override void Render(Graphics g)
         {
             g.FillEllipse(new SolidBrush(Color.Aquamarine),-15,-15,30,30);
@@ -37,6 +37,10 @@ namespace laba5.Objects
             if (obj is Marker)
             {
                 OnMarkerOverlap(obj as Marker);
+            }
+            else if (obj is GreenRing)
+            {
+                OnRingOverlap(obj as GreenRing);
             }
         }
     }

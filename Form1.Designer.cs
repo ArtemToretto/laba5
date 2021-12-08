@@ -34,6 +34,7 @@ namespace laba5
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.txtLog = new System.Windows.Forms.RichTextBox();
             this.Score = new System.Windows.Forms.TextBox();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).BeginInit();
             this.SuspendLayout();
             // 
@@ -73,6 +74,12 @@ namespace laba5
             this.Score.Text = "Счет: ";
             this.Score.TextChanged += new System.EventHandler(this.Score_TextChanged);
             // 
+            // timer2
+            // 
+            this.timer2.Enabled = true;
+            this.timer2.Interval = 60;
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -96,6 +103,7 @@ namespace laba5
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.RichTextBox txtLog;
         private System.Windows.Forms.TextBox Score;
+        private System.Windows.Forms.Timer timer2;
     }
 }
 

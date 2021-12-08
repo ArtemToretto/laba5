@@ -27,14 +27,19 @@ namespace laba5
             marker = new Marker(pbMain.Width / 2+5, pbMain.Height / 2+5, 0);
             player = new Player(pbMain.Width / 2, pbMain.Height / 2, 0);
             objects.Add(player);
-            player.OnOverlap += (p, obj) =>
+            player.OnRingOverlap += (obj) =>
               {
-                  txtLog.Text = $"[{DateTime.Now:G}] Игрок пересекся с {obj}\n" + txtLog.Text;
+                  txtLog.Text = $"[{DateTime.Now:G}] Игрок пересекся с {obj}\n";
               };
             player.OnMarkerOverlap += (m) =>
               {
+                  txtLog.Text = $"[{DateTime.Now:G}] Игрок достиг {m}\n";
                   objects.Remove(m);
-                  marker = null;
+                  marker = null;   
+              };
+            zone.BlackZoneOverlap += (z) =>
+              {
+                  txtLog.Text = $"[{DateTime.Now:G}] {z} находится в ЧЕРНОЙ ЗОНЕ!\n";
               };
             objects.Add(marker);
             firstRing=new GreenRing(100, 100, 0);
@@ -60,11 +65,6 @@ namespace laba5
 
             foreach (var obj in objects.ToList())
             {
-                if 
-            }
-
-            foreach (var obj in objects.ToList())
-            {
                 if (obj!=player && player.Overlaps(obj,g))
                 {
                     player.Overlap(obj);
@@ -87,9 +87,17 @@ namespace laba5
             foreach (var obj in objects)
             {
                 g.Transform = obj.GetTransform();
-                obj.Render(g);
+                if (zone.Overlaps(obj, g))
+                {
+                    zone.Overlap(obj);
+                    obj.Overlap(zone);
+                    obj.BlackRender(g);
+                }
+                else
+                {
+                    obj.Render(g);
+                }
             }
-            
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -139,9 +147,9 @@ namespace laba5
 
         private void ZoneGo()
         {
-            if (zone.X<1400)
+            if (zone.X<750)
             {
-                zone.X += 2;
+                zone.X += 4;
             }
             else 
             {
@@ -151,6 +159,15 @@ namespace laba5
         private void Score_TextChanged(object sender, EventArgs e)
         {
 
+        }
+        private void BlackRender (BaseObject obj,Graphics g)
+        {
+
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+         
         }
     }
 }

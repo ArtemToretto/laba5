@@ -18,9 +18,12 @@ namespace laba5.Objects
             this.Angle = Angle;
         }
 
+        public Action<BaseObject, BaseObject> OnOverlap;
+
         public virtual void Render(Graphics g)
         {
         }
+        public virtual void BlackRender(Graphics g) { }
         public Matrix GetTransform()
         {
             var matrix = new Matrix();
@@ -41,6 +44,13 @@ namespace laba5.Objects
             var region = new Region(path1);
             region.Intersect(path2);
             return !region.IsEmpty(g);
+        }
+        public virtual void Overlap(BaseObject obj)
+        {
+            if (this.OnOverlap!=null)
+            {
+                this.OnOverlap(this, obj);
+            }
         }
     }
 
