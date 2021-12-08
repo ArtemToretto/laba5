@@ -11,6 +11,7 @@ namespace laba5.Objects
         public float X;
         public float Y;
         public float Angle;
+        public bool color=true;
         public BaseObject(float X, float Y, float Angle)
         {
             this.X = X;

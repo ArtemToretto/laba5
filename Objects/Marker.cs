@@ -12,15 +12,18 @@ namespace laba5.Objects
 
         public override void Render(Graphics g)
         {
-            g.FillEllipse(new SolidBrush(Color.Red), -3, -3, 6, 6);
-            g.DrawEllipse(new Pen(Color.Red, 2), -6, -6, 12, 12);
-            g.DrawEllipse(new Pen(Color.Red, 2), -10, -10, 20, 20);
-        }
-        public override void BlackRender(Graphics g)
-        {
-            g.FillEllipse(new SolidBrush(Color.White), -3, -3, 6, 6);
-            g.DrawEllipse(new Pen(Color.White, 2), -6, -6, 12, 12);
-            g.DrawEllipse(new Pen(Color.White, 2), -10, -10, 20, 20);
+            if (color)
+            {
+                g.FillEllipse(new SolidBrush(Color.Red), -3, -3, 6, 6);
+                g.DrawEllipse(new Pen(Color.Red, 2), -6, -6, 12, 12);
+                g.DrawEllipse(new Pen(Color.Red, 2), -10, -10, 20, 20);
+            }
+            else
+            {
+                g.FillEllipse(new SolidBrush(Color.White), -3, -3, 6, 6);
+                g.DrawEllipse(new Pen(Color.White, 2), -6, -6, 12, 12);
+                g.DrawEllipse(new Pen(Color.White, 2), -10, -10, 20, 20);
+            }
         }
         public override GraphicsPath GetGraphicsPath()
         {

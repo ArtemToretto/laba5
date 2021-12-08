@@ -12,12 +12,14 @@ namespace laba5.Objects
 
         public override void Render(Graphics g)
         {
-            g.FillEllipse(new SolidBrush(Color.LawnGreen), -15, -15, 30, 30);
-        }
-
-        public override void BlackRender(Graphics g)
-        {
-            g.FillEllipse(new SolidBrush(Color.White), -15, -15, 30, 30);
+            if (color)
+            {
+                g.FillEllipse(new SolidBrush(Color.LawnGreen), -15, -15, 30, 30);
+            }
+            else
+            {
+                g.FillEllipse(new SolidBrush(Color.White), -15, -15, 30, 30);
+            }
         }
 
         public override GraphicsPath GetGraphicsPath()

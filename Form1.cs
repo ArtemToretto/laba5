@@ -26,9 +26,13 @@ namespace laba5
             Score.Text = "Счет: 0";
             marker = new Marker(pbMain.Width / 2+5, pbMain.Height / 2+5, 0);
             player = new Player(pbMain.Width / 2, pbMain.Height / 2, 0);
+            objects.Add(zone);
             objects.Add(player);
             player.OnRingOverlap += (obj) =>
               {
+                  score++;
+                  RandomGreenRing(obj as GreenRing);
+                  Score.Text = $"Счет: {score}";
                   txtLog.Text = $"[{DateTime.Now:G}] Игрок пересекся с {obj}\n";
               };
             player.OnMarkerOverlap += (m) =>
@@ -37,15 +41,16 @@ namespace laba5
                   objects.Remove(m);
                   marker = null;   
               };
-            zone.BlackZoneOverlap += (z) =>
+            zone.BlackZoneOverlap += (o) =>
               {
-                  txtLog.Text = $"[{DateTime.Now:G}] {z} находится в ЧЕРНОЙ ЗОНЕ!\n";
+                  txtLog.Text = $"[{DateTime.Now:G}] {o} находится в ЧЕРНОЙ ЗОНЕ!\n";
               };
             objects.Add(marker);
             firstRing=new GreenRing(100, 100, 0);
             secondRing=new GreenRing(300, 170, 0);
             objects.Add(firstRing);
             objects.Add(secondRing);
+           
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -58,45 +63,23 @@ namespace laba5
             var g = e.Graphics;
             g.Clear(Color.White);
 
-            g.Transform = zone.GetTransform();
-            zone.Render(g);
-
             UpdatePlayer();
 
-            foreach (var obj in objects.ToList())
+            foreach (var obj1 in objects.ToList())
             {
-                if (obj!=player && player.Overlaps(obj,g))
+                foreach (var obj2 in objects.ToList())
                 {
-                    player.Overlap(obj);
-                    obj.Overlap(player);
-                }
-            }
-
-            foreach (var obj in objects.ToList())
-            {
-                if ((obj==firstRing || obj==secondRing) && player.Overlaps(obj,g))
-                {
-                    score++;
-                    RandomGreenRing(obj as GreenRing);
-                    player.Overlap(obj);
-                    obj.Overlap(player);
-                    Score.Text = $"Счет: {score}";
+                    if (obj1 != obj2 && obj1.Overlaps(obj2, g))
+                    {
+                        obj1.Overlap(obj2);
+                    }
                 }
             }
 
             foreach (var obj in objects)
             {
                 g.Transform = obj.GetTransform();
-                if (zone.Overlaps(obj, g))
-                {
-                    zone.Overlap(obj);
-                    obj.Overlap(zone);
-                    obj.BlackRender(g);
-                }
-                else
-                {
-                    obj.Render(g);
-                }
+                obj.Render(g);
             }
         }
 
@@ -157,10 +140,6 @@ namespace laba5
             }
         }
         private void Score_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-        private void BlackRender (BaseObject obj,Graphics g)
         {
 
         }
